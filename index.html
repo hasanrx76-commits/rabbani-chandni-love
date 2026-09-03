@@ -657,11 +657,13 @@ tailwind.config = {
     if (passwordInput.value.trim() === CORRECT_PASSWORD) {
       passwordScreen.style.display = 'none';
       passwordScreen.style.visibility = 'hidden';
+      passwordScreen.remove();
       mainContent.style.display = 'block';
       mainContent.style.visibility = 'visible';
       mainContent.classList.remove('hidden');
       document.body.style.overflow = 'auto';
       document.body.classList.remove('overflow-hidden');
+      document.body.style.overflowY = 'auto';
       setStore('love_site_unlocked', true);
       startPetalAnimation();
     } else {
@@ -676,11 +678,13 @@ tailwind.config = {
   if (getStore('love_site_unlocked', false)) {
     passwordScreen.style.display = 'none';
     passwordScreen.style.visibility = 'hidden';
+    passwordScreen.remove();
     mainContent.style.display = 'block';
     mainContent.style.visibility = 'visible';
     mainContent.classList.remove('hidden');
     document.body.style.overflow = 'auto';
     document.body.classList.remove('overflow-hidden');
+    document.body.style.overflowY = 'auto';
     startPetalAnimation();
   }
 
