@@ -118,8 +118,8 @@ tailwind.config = {
     <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
       <input type="password" id="passwordInput" placeholder="Enter password"
         class="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder-white/50 border border-white/30 text-center text-lg tracking-widest mb-4"
-        maxlength="10">
-      <button id="passwordBtn" class="w-full py-3 bg-white text-primary font-semibold rounded-xl hover:bg-primary-fixed transition-colors">
+        maxlength="10" onkeypress="if(event.key==='Enter')checkPassword()">
+      <button id="passwordBtn" class="w-full py-3 bg-white text-primary font-semibold rounded-xl hover:bg-primary-fixed transition-colors" onclick="checkPassword()">
         Enter
       </button>
       <p id="passwordError" class="text-red-300 text-sm mt-3 hidden font-medium">Wrong password!</p>
@@ -650,11 +650,10 @@ tailwind.config = {
   const CORRECT_PASSWORD = '1215225';
   const passwordScreen = document.getElementById('passwordScreen');
   const passwordInput = document.getElementById('passwordInput');
-  const passwordBtn = document.getElementById('passwordBtn');
   const passwordError = document.getElementById('passwordError');
   const mainContent = document.getElementById('mainContent');
 
-  function checkPassword() {
+  window.checkPassword = function() {
     if (passwordInput.value.trim() === CORRECT_PASSWORD) {
       passwordScreen.style.display = 'none';
       mainContent.classList.remove('hidden');
@@ -666,9 +665,7 @@ tailwind.config = {
       passwordInput.value = '';
       passwordInput.focus();
     }
-  }
-  passwordBtn.addEventListener('click', checkPassword);
-  passwordInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') checkPassword(); });
+  };
 
   // Check if already unlocked
   if (getStore('love_site_unlocked', false)) {
