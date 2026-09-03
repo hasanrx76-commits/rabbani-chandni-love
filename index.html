@@ -696,6 +696,7 @@ tailwind.config = {
     navBtns.forEach(b => { if (b.dataset.page === pageName) b.classList.add('active'); });
     window.scrollTo(0, 0);
   }
+  window.navigateTo = navigateTo;
 
   navBtns.forEach(btn => {
     btn.addEventListener('click', () => navigateTo(btn.dataset.page));
@@ -838,6 +839,13 @@ tailwind.config = {
     quoteLang.textContent = '- ' + q.lang;
     const likes = getStore('quote_likes_' + (currentQuote % quotes.length), 0);
     quoteLikeCount.textContent = likes;
+    const liked = getStore('quote_liked_' + (currentQuote % quotes.length), false);
+    const icon = quoteLikeBtn.querySelector('.material-symbols-outlined');
+    if (liked) {
+      icon.classList.add('fill-heart');
+    } else {
+      icon.classList.remove('fill-heart');
+    }
   }
 
   quoteNextBtn.addEventListener('click', function() {
@@ -847,12 +855,21 @@ tailwind.config = {
   });
 
   quoteLikeBtn.addEventListener('click', function() {
-    const key = 'quote_likes_' + (currentQuote % quotes.length);
+    const idx = currentQuote % quotes.length;
+    const key = 'quote_likes_' + idx;
+    const likedKey = 'quote_liked_' + idx;
+    let liked = getStore(likedKey, false);
     let likes = getStore(key, 0);
-    likes++;
+    if (!liked) {
+      likes++;
+      liked = true;
+    } else {
+      likes--;
+      liked = false;
+    }
     setStore(key, likes);
+    setStore(likedKey, liked);
     renderQuote();
-    quoteLikeBtn.querySelector('.material-symbols-outlined').classList.add('fill-heart');
   });
 
   renderQuote();
